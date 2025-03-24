@@ -30,7 +30,7 @@ if __name__=='__main__':
         #2024-02-26	2024-03-05
         conn = duckdb.connect(":memory:")
         conn.create_function('business_days_calc', business_days_calc, [BIGINT, BIGINT], BIGINT)
-        sql="SELECT business_days_calc(datediff('day', '2024-02-26'::date, '2024-03-05'), datepart('dow','2024-02-26'::date))"
+        sql="SELECT business_days_calc(datediff('day', '2024-02-26'::date, '2024-03-05'::date), datepart('dow','2024-02-26'::date))"
         conn.execute(sql)
         r=conn.fetchall()
         conn.close()
