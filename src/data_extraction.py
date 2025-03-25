@@ -49,6 +49,7 @@ raw_products_sql="""
         , sizeUnitMeasureCode
         , weight
         , weightUnitMeasureCode
+    ORDER BY productId
         ;
 
     --Write storage table to parquet to keep data types and optmize ETL
@@ -80,7 +81,9 @@ SELECT salesOrderID
     , customerID
     , salesPersonID
     , freight
-FROM read_csv_auto('raw_sales_order_header.csv', HEADER=True);
+FROM read_csv_auto('raw_sales_order_header.csv', HEADER=True)
+ORDER BY salesOrderID
+;
 
 --Write storage table to parquet to keep data types and optmize ETL
 COPY
@@ -106,7 +109,8 @@ SELECT salesOrderID
     , productID
     , unitPrice
     , unitPriceDiscount
-FROM read_csv_auto('raw_sales_order_detail.csv', HEADER=True);
+FROM read_csv_auto('raw_sales_order_detail.csv', HEADER=True)
+ORDER BY salesOrderDetailID;
 
 --Write storage table to parquet to keep data types and optmize ETL
 COPY

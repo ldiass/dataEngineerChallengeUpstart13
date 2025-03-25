@@ -43,6 +43,7 @@ publish_product_sql="""
         END as productCategoryName
         , productSubCategoryName
     FROM read_parquet('storage_products.parquet')
+    ORDER BY productId
     ;
 
     --Write storage table to csv to make it readable
