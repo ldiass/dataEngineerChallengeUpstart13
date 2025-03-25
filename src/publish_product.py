@@ -53,11 +53,12 @@ publish_product_sql="""
     (FORMAT CSV);
     """
 
-# Connect to in-memory DuckDB database
-conn = duckdb.connect(":memory:")
+if __name__=='__main__':
+    # Connect to in-memory DuckDB database
+    conn = duckdb.connect(":memory:")
 
-# Load run SQL commands for loading
-conn.execute(publish_product_sql)
+    # Load run SQL commands for loading
+    conn.execute(publish_product_sql)
 
-# Close connection
-conn.close()
+    # Close connection
+    conn.close()
