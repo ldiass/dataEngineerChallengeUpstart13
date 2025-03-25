@@ -49,14 +49,15 @@ publish_orders_sql="""
     (FORMAT CSV);
     """
 
-# Connect to in-memory DuckDB database
-conn = duckdb.connect(":memory:")
+if __name__=='__main__':
+    # Connect to in-memory DuckDB database
+    conn = duckdb.connect(":memory:")
 
-#Load the UDF
-conn.create_function('business_days_calc', business_days_calc, [BIGINT, BIGINT], BIGINT)
+    #Load the UDF
+    conn.create_function('business_days_calc', business_days_calc, [BIGINT, BIGINT], BIGINT)
 
-# Load run SQL commands for loading
-conn.execute(publish_orders_sql)
+    # Load run SQL commands for loading
+    conn.execute(publish_orders_sql)
 
-# Close connection
-conn.close()
+    # Close connection
+    conn.close()
