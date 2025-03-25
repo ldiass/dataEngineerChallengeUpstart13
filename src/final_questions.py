@@ -1,7 +1,5 @@
 import duckdb
 from duckdb.typing import *
-from utils import business_days_calc
-
 
 #Which color generated the highest revenue each year?
 high_color_sql="""

@@ -1,6 +1,6 @@
 import duckdb
 from duckdb.typing import *
-from utils import business_days_calc
+from src.utils import business_days_calc
 
 publish_orders_sql="""
     CREATE TABLE publish_orders (
