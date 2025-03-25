@@ -2,7 +2,7 @@ import duckdb
 
 raw_products_sql="""
     CREATE TABLE storage_products (
-        productId INTEGER PRIMARY KEY,
+        productId INTEGER,
         productDesc TEXT,
         productNumber TEXT,
         makeFlag varchar(5),
@@ -52,6 +52,8 @@ raw_products_sql="""
     ORDER BY productId
         ;
 
+    ALTER TABLE storage_products ADD PRIMARY KEY (productId);
+
     --Write storage table to parquet to keep data types and optmize ETL
     COPY
     (SELECT * FROM storage_products)
@@ -60,7 +62,7 @@ raw_products_sql="""
     """
 
 raw_sales_order_header_sql="""CREATE TABLE storage_sales_order_header (
-    salesOrderID INTEGER PRIMARY KEY,
+    salesOrderID INTEGER,
     orderDate DATE,
     shipDate DATE,
     onlineOrderFlag VARCHAR(5),
@@ -85,6 +87,8 @@ FROM read_csv_auto('raw_sales_order_header.csv', HEADER=True)
 ORDER BY salesOrderID
 ;
 
+ALTER TABLE storage_sales_order_header ADD PRIMARY KEY (salesOrderID);
+
 --Write storage table to parquet to keep data types and optmize ETL
 COPY
     (SELECT * FROM storage_sales_order_header)
@@ -95,7 +99,7 @@ COPY
 
 raw_sales_order_detail_sql="""CREATE TABLE storage_sales_order_detail (
     salesOrderID INTEGER,
-    salesOrderDetailID INTEGER PRIMARY KEY,
+    salesOrderDetailID INTEGER,
     orderQty INTEGER,
     productID INTEGER REFERENCES storage_products(productId),
     unitPrice DECIMAL(10,4),
@@ -111,6 +115,8 @@ SELECT salesOrderID
     , unitPriceDiscount
 FROM read_csv_auto('raw_sales_order_detail.csv', HEADER=True)
 ORDER BY salesOrderDetailID;
+
+ALTER TABLE storage_sales_order_detail ADD PRIMARY KEY (salesOrderDetailID);
 
 --Write storage table to parquet to keep data types and optmize ETL
 COPY
