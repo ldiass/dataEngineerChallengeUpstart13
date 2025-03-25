@@ -40,9 +40,11 @@ conn = duckdb.connect(":memory:")
 # Load run SQL commands for loading
 conn.execute(high_color_sql)
 print(conn.fetchall())
+#[(2024, 'Yellow', 6368158.47890033, 1), (2023, 'Black', 15047694.369200917, 1), (2022, 'Black', 14005242.975200394, 1), (2021, 'Red', 6019614.015699884, 1)]
 
 conn.execute(avg_leadTime_sql)
 print(conn.fetchall())
+#[('Clothing', 5.005443886097153), ('Accessories', 5.007219107595422), ('Bikes', 5.005137673597174), (None, 5.011021698138262), ('Components', 5.003177286771993)]
 
 # Close connection
 conn.close()
