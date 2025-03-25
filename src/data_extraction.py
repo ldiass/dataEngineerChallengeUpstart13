@@ -125,14 +125,14 @@ COPY
     (FORMAT parquet);
 """
 
+if __name__=='__main__':
+    # Connect to in-memory DuckDB database
+    conn = duckdb.connect(":memory:")
 
-# Connect to in-memory DuckDB database
-conn = duckdb.connect(":memory:")
+    # Load run SQL commands for loading
+    conn.execute(raw_products_sql)
+    conn.execute(raw_sales_order_header_sql)
+    conn.execute(raw_sales_order_detail_sql)
 
-# Load run SQL commands for loading
-conn.execute(raw_products_sql)
-conn.execute(raw_sales_order_header_sql)
-conn.execute(raw_sales_order_detail_sql)
-
-# Close connection
-conn.close()
+    # Close connection
+    conn.close()
