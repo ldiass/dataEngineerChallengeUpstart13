@@ -28,3 +28,19 @@ def business_days_calc(num_days: int, start_dow: int) -> int:
         num_holidays += + (1 if remaining_days > 0 else 0)
 
     return num_days - num_holidays
+
+def export_file(conn, table_name, file_format="csv", file_path=None):
+    if file_path is None:
+        file_path=f"{table_name}"
+        file_path+="."+file_format.lower()
+
+    if file_format=="csv":
+        sql=f"""COPY {table_name} TO '{file_path}' (HEADER, DELIMITER ',');"""
+    elif file_format=="parquet":
+        sql=f"""COPY {table_name} TO '{file_path}';"""
+    else:
+        with open(file_path, "w") as f:
+            f.write("Output format not supported")
+        sql="select 1"
+
+    conn.execute(sql)  
